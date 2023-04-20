@@ -2,6 +2,7 @@ total = 0
 count = 0
 temperature = []
 
+#Taking user input to determine for which year he/she want to calculate data and validate the input
 while True:
     try:
         year = int(input("Year: "))
@@ -12,6 +13,7 @@ while True:
     except:
         print("Error: This is not a numerical value!")
 
+#Taking user input to determine for which month he/she want to calculate data and validate the input
 while year:
     month = input("Month: ")
     if month.upper() in ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"]:
@@ -19,20 +21,34 @@ while year:
     else:
         print("Enter a valid name of month")
 
+#calculating average, maximum and minimum temperature based on user input
+#in case of leap year, the month of February has 29 days. So the program must consider this
+#some months has 30 days and some has 31 days. The program must consider this also
+
 if month.upper() == "FEBRUARY":
+    #determining if the user input year is leapyear
+    
     if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
         for i in range (29):
             while True:
                 try:
+                    #taking user input temperature data and validating these
+                    
                     temp = float(input("Temperature for day " + str(i+1) + ": "))
-                    if temp >= -273.15: break
+                    
+                    #abslute temperature is -273.15 degree celcius, so tempurature below this is not possible on earth
+                    
+                    if temp >= -273.15: break  
                     else: print("This temperature is below absolute zero. Try again.")
+                    
                 except:
                     print("Error: This is not a numerical value!")
-            temperature.append(temp)
+            #appending the user input data to a list named temperature earlier
+            temperature.append(temp)  
             total += temp
             count += 1
-         
+            
+    #If the year is not leap year
     else:
         for i in range (28):
             while True:
@@ -45,7 +61,7 @@ if month.upper() == "FEBRUARY":
             temperature.append(temp)
             total += temp
             count += 1
-                          
+                        
 elif month.upper() in ["JANUARY", "MARCH", "MAY", "JULY", "AUGUST", "OCTOBER", "DECEMBER"]:
     for i in range (31):
         while True:
@@ -72,9 +88,11 @@ else:
         total += temp
         count += 1
 
-avg = total/count
-maximum = max(temperature)
-minimum = min(temperature)
+avg = total/count  #calculating average temperature
+maximum = max(temperature)  #calculating maximum temperature using max() function
+minimum = min(temperature)  #calculating minimum temperature using min() function
+
+#output of the program
 
 print("\nAverage temperature of " + month + ": " + str(avg) + "C")
 print("Maximum temperature of " + month + ": " + str(maximum) + "C")
